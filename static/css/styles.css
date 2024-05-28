@@ -1,0 +1,155 @@
+
+
+body {
+    font-family: 'Poppins';
+    /* background-color: #f9fafb; */
+}
+
+.navbar,
+.bottombar {
+    background-color: #ffffff;
+}
+
+/* .navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+
+.message {
+    max-width: 100%;
+}
+
+main {
+    max-height: calc(100vh - 2rem);
+    /* Adjust based on navbar and bottombar height */
+    overflow-y: auto;
+    margin-left: 16px;
+}
+
+.icon-lg {
+    font-size: 2.3rem;
+    /* Adjust the font size as needed */
+}
+
+
+/* Light Mode */
+textarea {
+    height: auto;
+    max-height: 8rem;
+    /* 5 lines approximately, adjust as needed */
+    overflow-y: auto;
+    border-radius: 0.5rem;
+    min-height: 3rem;
+    /* border: 1px solid #d1d5db; */
+    /* Light mode border color */
+}
+
+/* Dark Mode */
+/* .dark textarea {
+    border: 1px solid #4b5563; */
+    /* Dark mode border color */
+    /* background-color: #252f3f; */
+    /* color: #d1d5db; */
+    /* Dark mode text color */
+/* } */
+
+
+.bottombar {
+    background-color: transparent;
+    /* Transparent background */
+}
+
+form.fixed {
+    z-index: 1000;
+    /* Ensure the form is above other content */
+}
+
+form.flex {
+    align-items: flex-end;
+    /* Align items to the end (bottom) */
+}
+
+button[type="submit"] {
+    margin-left: 0.5rem;
+    /* Margin to separate the button from the textarea */
+    border-radius: 0.5rem;
+    /* Rounded corners for the button */
+}
+
+
+
+/* Light Mode */
+::-webkit-scrollbar {
+    width: 12px;
+    /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    /* Track color in light mode */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #bdbebe;
+    /* Thumb color in light mode */
+    border-radius: 6px;
+    /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #CAD4DB;
+    /* Thumb color on hover */
+}
+
+/* Dark Mode */
+.dark ::-webkit-scrollbar {
+    width: 12px;
+    /* Width of the scrollbar */
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: transparent;
+    /* Track color in dark mode */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background-color: #666;
+    /* Thumb color in dark mode */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+    /* Thumb color on hover */
+}
+
+
+/* Media query for smaller window sizes */
+@media screen and (max-width: 768px) {
+
+    main {
+        scrollbar-width: thin;
+        margin-left: 4px;
+    }
+
+    /* Apply thin scrollbar width to all scrollbars */
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #bdbebe;
+        /* Thumb color in light mode */
+        border-radius: 6px;
+        /* Rounded corners */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #CAD4DB;
+        /* Thumb color on hover */
+    }
+
+    .dark ::-webkit-scrollbar {
+        width: 4px;
+        /* Width of the scrollbar */
+    }
+
+}

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% block title %}Sentiment Quiz{% endblock %}
+
+{% if "google_id" in session %}
+{% block quiz_loggedIn_hidden %}hidden{% endblock %}
+{% else %}
+{% block quiz_hidden %}hidden{% endblock %}
+{% endif %}
+
+{% block body %}
+<main id="main" class="flex-grow mt-16 mb-16 p-4 flex items-center justify-center">
+    <div class="w-full max-w-screen-md">
+        <div class="p-4 bg-primary-100 dark:bg-primary-200 rounded-lg">
+            <form action="/next" method="POST" id="quiz-form">
+                <!-- Text Section -->
+                <div id="text-section" class="mb-4 text-center">
+                    {{ text }}
+                </div>
+
+                <!-- Slider Section -->
+                <div class="mb-4">
+                    <label for="sentiment-slider"
+                        class="block text-xl font-bold">Sentiment:</label>
+                    <input type="range" id="sentiment-slider" name="sentiment" min="1" max="3" step="1"
+                        class="slider w-full">
+                    <div class="flex justify-between text-base font-medium">
+                        <span>Negative</span>
+                        <span>Neutral</span>
+                        <span>Positive</span>
+                    </div>
+                </div>
+
+                <!-- Next Button -->
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="bg-primary-400 dark:bg-primary-500 hover:bg-primary-500 dark:hover:bg-primary-600 text-text-50 dark:text-text-950 py-2 px-4 rounded-lg flex items-center">
+                        Next
+                    </button>
+                </div>
+
+                <!-- Hidden Inputs to Pass Data -->
+                <input type="hidden" name="current_text" value="{{ text }}">
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock %}

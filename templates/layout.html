@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{{url_for('static', filename='images/mood.png')}}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+  <link rel="stylesheet" href="{{url_for('static', filename='css/dark-theme.css')}}" />
+  <!-- Add dark theme CSS file -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}" />
+</head>
+
+<body
+  class="leading-relaxed flex flex-col h-screen justify-between bg-background-50 text-text-950 dark:bg-background-50 dark:text-text-950">
+  <!-- Navbar -->
+  <nav
+    class="navbar fixed top-0 w-full p-4 bg-background-50 dark:bg-background-50 border-b border-background-200 dark:border-background-200">
+    <div class="container mx-auto flex justify-between items-center w-full">
+      <!-- Left Section: Logo and Title -->
+      <div class="flex items-center space-x-4">
+        <img src="{{ url_for('static', filename='images/mood.png') }}" alt="Web App Logo"
+          class="w-12 h-12 rounded-full" />
+        <span class="text-2xl font-bold hidden sm:block">
+          Sentiment Analysis
+        </span>
+      </div>
+
+      <!-- Middle Section: Quiz Link -->
+      <div class="flex-grow px-4 flex justify-center space-x-4">
+        <a href="/quiz" class="{% block quiz_hidden %}{% endblock %} flex flex-col lg:flex-row items-center font-normal hover:text-slate-400">
+          <span class="material-symbols-outlined md:mr-1"> note_alt </span>
+          <span class="hidden md:block">Quiz</span>
+        </a>
+
+        {% if "google_id" in session %}
+        <a href="/protected_area" class="{% block chat_loggedIn_hidden %}{% endblock %} flex flex-col lg:flex-row items-center font-normal hover:text-slate-400">
+          <span class="material-symbols-outlined md:mr-1">
+            chat
+            </span>
+          <span class="hidden md:block">Chat</span>
+        </a>
+        {% else %}
+        <a href="/" class="{% block chat_hidden %}{% endblock %} flex flex-col lg:flex-row items-center font-normal hover:text-slate-400">
+          <span class="material-symbols-outlined md:mr-1">
+            chat
+            </span>
+          <span class="hidden md:block">Chat</span>
+        </a>
+        {% endif %}
+      </div>
+
+      <!-- Right Section: User and Actions -->
+      <div class="flex items-center space-x-4">
+        {% if "google_id" in session %}
+        <span class="font-normal hidden md:block">{{ name }}</span>
+        <img src="{{ picture }}" alt="Profile Picture"
+          class="w-8 h-8 rounded-full border border-background-200 dark:border-background-200" />
+        {% else %}
+        <span class="font-normal hidden md:block">Guest</span>
+        <!-- <img
+            src="{{ url_for('static', filename='images/account.png') }}"
+            alt="Profile Picture"
+            class="w-8 h-8 rounded-full"
+          /> -->
+        <span class="material-symbols-outlined icon-lg">
+          account_circle
+        </span>
+
+        {% endif %}
+
+        <button id="theme-toggle"
+          class="bg-primary-400 dark:bg-primary-500 hover:bg-primary-500 dark:hover:bg-primary-600 text-text-50 dark:text-text-950 px-4 py-2 rounded flex items-center">
+          <span id="light-icon"
+            class="material-symbols-outlined hidden dark:inline dark:text-accent-900">light_mode</span>
+          <span id="dark-icon" class="material-symbols-outlined inline dark:hidden text-accent-900">dark_mode</span>
+          <span class="font-normal ml-2 hidden md:block" id="theme-text">Dark</span>
+        </button>
+
+        {% if "google_id" in session %}
+        <a href="/logout" class="inline-block">
+          <button
+            class="bg-accent-300 dark:bg-accent-400 text-text-950 dark:text-text-950 py-2 px-4 rounded hover:bg-accent-400 dark:hover:bg-accent-500 flex items-center">
+            <span class="font-normal hidden sm:block"> Logout&nbsp; </span>
+
+            <span class="material-symbols-outlined ml-1 text-accent-900 dark:text-accent-900">move_item</span>
+          </button>
+        </a>
+        {% else %}
+        <a href="/login" class="inline-block">
+          <button
+            class="bg-accent-300 dark:bg-accent-400 text-text-950 dark:text-text-950 py-2 px-4 rounded hover:bg-accent-400 dark:hover:bg-accent-500 flex items-center">
+            <span class="material-symbols-outlined mr-1 text-accent-900 dark:text-accent-900">input</span>
+            <span class="font-normal hidden sm:block"> &nbsp;Login </span>
+          </button>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  {% block body %} {% endblock %}
+
+  <!-- Bottom Bar -->
+  <!-- <div class="bottombar fixed bottom-0 w-full p-4 border-t border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+      <div class="container mx-auto flex w-full max-w-screen-md">
+        <form action="/send_message" method="POST" class="flex w-full"> -->
+  <!-- <input
+                type="text"
+                name="message_content"
+                class="flex-grow p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300"
+                placeholder="Type your message"
+            /> -->
+
+  <!-- <div class="flex-grow flex items-start">
+            <textarea
+              name="message_content"
+              rows="1"
+              class="w-full p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-300 resize-none overflow-auto max-h-32"
+              placeholder="Type your message"
+            ></textarea>
+          </div>
+            <button
+                type="submit"
+                class="bg-blue-500 text-white py-2 px-4 rounded-r-lg hover:bg-blue-600 flex items-center  h-10"
+            >
+                <span class="material-symbols-outlined mr-1">send</span>
+                <span class="hidden sm:block">
+                  &nbsp;Send
+                </span>
+            </button>
+        </form>
+        
+      </div>
+    </div> -->
+
+  
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+</body>
+
+</html>
